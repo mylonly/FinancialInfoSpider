@@ -6,7 +6,8 @@
 # http://doc.scrapy.org/en/latest/topics/items.html
 
 import scrapy
-
+from scrapy_djangoitem import DjangoItem
+from FinancialNews.models import FinancialNews 
 
 class FinancialinfospiderItem(scrapy.Item):
     # define the fields for your item here like:
@@ -17,10 +18,6 @@ class FinancialinfospiderItem(scrapy.Item):
 
 
 
-class ArticleItem(scrapy.Item):
-    title = scrapy.Field()    #文章标题
-    source = scrapy.Field()   #文章来源
-    pub_time = scrapy.Field() #发布时间
-    content = scrapy.Field()  #文章正文
-    image = scrapy.Field()    #文章图片
+class ArticleItem(DjangoItem):
+    django_model = FinancialNews
 

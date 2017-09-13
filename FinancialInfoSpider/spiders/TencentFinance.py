@@ -49,9 +49,10 @@ class TencentStockSpider(scrapy.Spider):
         sel = scrapy.Selector(response)
 
         article = ArticleItem()
+        article['url'] = response.url
         article['title'] = sel.xpath('//*[@id="Main-Article-QQ"]/div/div[1]/div[1]/div[1]/h1/text()').extract()[0]
         article['source'] = sel.xpath('//*[@id="Main-Article-QQ"]/div/div[1]/div[1]/div[1]/div/div[1]/span[2]').xpath('string(.)').extract()[0]
-        article['pub_time'] = sel.xpath('//*[@id="Main-Article-QQ"]/div/div[1]/div[1]/div[1]/div/div[1]/span[3]/text()').extract()[0]
+        article['pub_time'] = sel.xpath('//div[@id="Main-Article-QQ"]/div/div[1]/div[1]/div[1]/div/div[1]/span[@class="a_time" or @class="pubTime"]/text()').extract()[0]
         
         html_content = sel.xpath('//*[@id="Cnt-Main-Article-QQ"]').extract()[0]
         article['content'] = self.remove_html_tags(html_content)
@@ -60,7 +61,7 @@ class TencentStockSpider(scrapy.Spider):
 
     def remove_html_tags(self,html):
         
-        soup = BeautifulSoup(html)
+        soup = BeautifulSoup(html,"lxml")
         [s.extract() for s in soup('script')]
         [s.extract() for s in soup('style')] 
         

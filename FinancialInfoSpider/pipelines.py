@@ -8,6 +8,10 @@
 
 class FinancialinfospiderPipeline(object):
     def process_item(self, item, spider):
+        try:
+            item.save()
+        except:
+            print('save error')
         return item
 
 
