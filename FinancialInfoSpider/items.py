@@ -7,7 +7,7 @@
 
 import scrapy
 from scrapy_djangoitem import DjangoItem
-from FinancialNews.models import FinancialNews 
+from News.models import News 
 
 class FinancialinfospiderItem(scrapy.Item):
     # define the fields for your item here like:
@@ -19,5 +19,5 @@ class FinancialinfospiderItem(scrapy.Item):
 
 
 class ArticleItem(DjangoItem):
-    django_model = FinancialNews
+    django_model = News
 

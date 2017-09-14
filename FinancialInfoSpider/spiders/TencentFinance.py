@@ -53,7 +53,9 @@ class TencentStockSpider(scrapy.Spider):
         article['title'] = sel.xpath('//*[@id="Main-Article-QQ"]/div/div[1]/div[1]/div[1]/h1/text()').extract()[0]
         article['source'] = sel.xpath('//*[@id="Main-Article-QQ"]/div/div[1]/div[1]/div[1]/div/div[1]/span[2]').xpath('string(.)').extract()[0]
         article['pub_time'] = sel.xpath('//div[@id="Main-Article-QQ"]/div/div[1]/div[1]/div[1]/div/div[1]/span[@class="a_time" or @class="pubTime"]/text()').extract()[0]
-        
+        images = sel.xpath('//*[@id="Cnt-Main-Article-QQ"]//img/@src').extract()
+        if len(images) > 0:
+            article['image_url'] = images[0] 
         html_content = sel.xpath('//*[@id="Cnt-Main-Article-QQ"]').extract()[0]
         article['content'] = self.remove_html_tags(html_content)
         return article
